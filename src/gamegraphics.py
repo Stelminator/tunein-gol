@@ -7,14 +7,13 @@ this file is mostly to add some right click sugar
 import graphics
 
 
-
 class GameGraphWin(graphics.GraphWin):
     def __init__(self, title="Graphics Window",
                  width=200, height=200, autoflush=True):
-        super(self, GameGraphWin).__init__(title, width, height, autoflush)
+        graphics.GraphWin.__init__(self, title, width, height, autoflush)
         self.rightMouseX = None
         self.rightMouseY = None
-        self.bind("<Button-2>", self._onRighClick)
+        self.bind("<Button-3>", self._onRightClick)
         self._rightMouseCallback = None
 
     def _onRightClick(self, e):

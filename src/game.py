@@ -33,6 +33,14 @@ class GameOfLife(object):
     def locations(self):
         return itertools.product(range(self.height), range(self.width))
 
+    def get_location(self, location):
+        (x, y) = location
+        return self.state[y][x]
+
+    def set_location(self, location, value):
+        (x, y) = location
+        self.state[y][x] = value
+
     def tick(self):
         newstate = [[0]*self.width for _i in range(self.height)]
 
@@ -71,15 +79,19 @@ class GameOfLife(object):
         assert not alive or neighbors_alive in (2,3)
         return alive
 
+def getGlider(width=25, height=25):
+    start = [[0]*width for _ in range(height)]
+    xstart = width/2 -1
+    ystart = height/2 -1
+
+    start[ystart  ][xstart:xstart+2] = [0,1,0]
+    start[ystart+1][xstart:xstart+2] = [0,0,1]
+    start[ystart+2][xstart:xstart+2] = [1,1,1]
+    return GameOfLife(start)
 
 if __name__ == '__main__':
-    start = [[0]*25 for i in range(25)]
+    gol = getGlider()
 
-    start[11][11:13] = [0,1,0]
-    start[12][11:13] = [0,0,1]
-    start[13][11:13] = [1,1,1]
-
-    gol = GameOfLife(start)
     import time
     for i in range(200):
         time.sleep(.1)
