@@ -25,8 +25,10 @@ class GameOfLife(object):
                         for val in line]) for line in self.state)
 
     def __unicode__(self):
-        return u'\n'.join(u''.join([FULL_BLOCK if val else BLANK_SPACE
+        game_unicode = u'\n'.join(u''.join([FULL_BLOCK if val else BLANK_SPACE
                         for val in line]) for line in self.state)
+        alive_unicode = u"alive : %d" % sum(sum(l) for l in self.state)
+        return game_unicode + u'\n' + alive_unicode
 
     def locations(self):
         return itertools.product(range(self.height), range(self.width))
@@ -71,16 +73,16 @@ class GameOfLife(object):
 
 
 if __name__ == '__main__':
-    gol = GameOfLife([[1,1,0],
-              [0,0,1],
-              [1,1,0]])
-    print unicode(gol)
-    print
-    gol.tick()
-    print unicode(gol)
-    print
-    gol.tick()
-    print unicode(gol)
-    print
-    gol.tick()
-    print unicode(gol)
+    start = [[0]*25 for i in range(25)]
+
+    start[11][11:13] = [0,1,0]
+    start[12][11:13] = [0,0,1]
+    start[13][11:13] = [1,1,1]
+
+    gol = GameOfLife(start)
+    import time
+    for i in range(200):
+        time.sleep(.1)
+        print unicode(gol)
+        print
+        gol.tick()
