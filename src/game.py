@@ -1,4 +1,4 @@
-
+import itertools
 
 FULL_BLOCK = unichr(0x2588)
 FULL_BLOCK_STR = '#'
@@ -29,14 +29,10 @@ class GameOfLife(object):
                         for val in line]) for line in self.state)
 
     def locations(self):
-        for y in range(self.height):
-            for x in range(self.width):
-                yield (x,y)
+        return itertools.product(range(self.height), range(self.width))
 
     def tick(self):
-        newstate = []
-        for i in range(self.height):
-            newstate.append([0]*self.width)
+        newstate = [[0]*self.width for _i in range(self.height)]
 
         for (x,y) in self.locations():
             newstate[y][x] = 1 if self.lives((x,y)) else 0
