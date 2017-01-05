@@ -12,7 +12,7 @@ import graphics
 
 
 class GameGui(object):
-    def __init__(self, game=None, paused=False, xscale=14, yscale=14):
+    def __init__(self, game=None, paused=True, xscale=14, yscale=14):
         if not game:
             game = getGlider()
         self.game = game
